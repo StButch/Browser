@@ -59,8 +59,8 @@ try:
 
     driver.get(url=url)
 
-    if isfile('st.butcher'):
-        for cookie in pickle.load(open('st.butcher','rb')):
+    if isfile('damp'):
+        for cookie in pickle.load(open('damp','rb')):
             driver.add_cookie(cookie)
         driver.refresh()
 
@@ -76,7 +76,7 @@ try:
         password_input.send_keys(password)
         password_input.send_keys(Keys.ENTER)
 
-        pickle.dump(driver.get_cookies(), open('st.butcher','wb'))
+        pickle.dump(driver.get_cookies(), open('damp','wb'))
 
     driver.implicitly_wait(2)
 
