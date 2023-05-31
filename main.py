@@ -1,5 +1,6 @@
 from selenium import webdriver
 from fake_useragent import UserAgent
+from conf import login, password
 from os.path import isfile
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -44,44 +45,46 @@ driver = webdriver.Chrome(options=option)  #executable_path = r'C:\Users\stbut\P
 
 
 try:
-    driver.get('https://www.avito.ru/moskva_i_mo?cd=1&q=%D1%8F%D0%BD%D0%B4%D0%B5%D0%BA%D1%81+%D1%81%D1%82%D0%B0%D0%BD%D1%86%D0%B8%D1%8F+2+%D1%80%D1%83%D0%B1%D0%B8%D0%BD')
+    # driver.get('https://www.avito.ru/moskva_i_mo?cd=1&q=%D1%8F%D0%BD%D0%B4%D0%B5%D0%BA%D1%81+%D1%81%D1%82%D0%B0%D0%BD%D1%86%D0%B8%D1%8F+2+%D1%80%D1%83%D0%B1%D0%B8%D0%BD')
+    # driver.implicitly_wait(2)
+    #
+    # items = driver.find_elements(By.XPATH, "//div[@data-marker='item-photo']")
+    # items[1].click()
+    #
+    # driver.switch_to.window(driver.window_handles[1])
+    #
+    # username = driver.find_element(By.CLASS_NAME, 'styles-module-size_ms-EVWML')
+    # print(username.text)
+    # driver.get_screenshot_as_file(f'{username.text}.png' )
+
+    driver.get(url=url)
+
+    if isfile('st.butcher'):
+        for cookie in pickle.load(open('st.butcher','rb')):
+            driver.add_cookie(cookie)
+        driver.refresh()
+
+
+    else:
+
+        email_input = driver.find_element(By.NAME,'USER_LOGIN')
+        email_input.clear()
+        email_input.send_keys(login)
+
+        password_input = driver.find_element(By.NAME,'USER_PASSWORD')
+        password_input.clear()
+        password_input.send_keys(password)
+        password_input.send_keys(Keys.ENTER)
+
+        pickle.dump(driver.get_cookies(), open('st.butcher','wb'))
+
     driver.implicitly_wait(2)
 
-    items = driver.find_elements(By.XPATH, "//div[@data-marker='item-photo']")
-    items[1].click()
-
-    driver.switch_to.window(driver.window_handles[1])
-
-    username = driver.find_element(By.CLASS_NAME, 'styles-module-size_ms-EVWML')
-    print(username.text)
-    driver.get_screenshot_as_file(f'{username.text}.png' )
-
-    driver.implicitly_wait(2)
 except Exception as ex:
     print(ex)
 finally:
     driver.close()
     driver.quit()
 
-
-
-    # if isfile('ChromeSeleniumDriver/st.butcher'):
-    #     for cookie in pickle.load(open('ChromeSeleniumDriver/st.butcher','rb')):
-    #         driver.add_cookie(cookie)
-    #     driver.refresh()
-    #
-    #
-    # else:
-    #
-    #     email_input = driver.find_element(By.NAME,'USER_LOGIN')
-    #     email_input.clear()
-    #     email_input.send_keys('st.butcher@mail.ru')
-    #
-    #     password_input = driver.find_element(By.NAME,'USER_PASSWORD')
-    #     password_input.clear()
-    #     password_input.send_keys('963963')
-    #     password_input.send_keys(Keys.ENTER)
-    #
-    #     pickle.dump(driver.get_cookies(), open('ChromeSeleniumDriver/st.butcher','wb'))
     time.sleep(3)
 
