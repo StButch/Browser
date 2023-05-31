@@ -54,7 +54,7 @@ try:
 
     username = driver.find_element(By.CLASS_NAME, 'styles-module-size_ms-EVWML')
     print(username.text)
-    driver.get_screenshot_as_file(f'ChromeSeleniumDriver\{username.text}.png' )
+    driver.get_screenshot_as_file(f'{username.text}.png' )
 
     driver.implicitly_wait(2)
 except Exception as ex:
